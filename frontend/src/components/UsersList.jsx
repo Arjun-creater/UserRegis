@@ -38,61 +38,57 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/users');
-      setUsers(response.data);
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: 'Failed to fetch users',
-        severity: 'error'
-      });
-    }
-  };
+ const fetchUsers = async () => {
+  try {
+    const response = await axios.get('https://userregis-yiup.onrender.com/api/users');
+    setUsers(response.data);
+  } catch (error) {
+    setSnackbar({
+      open: true,
+      message: 'Failed to fetch users',
+      severity: 'error'
+    });
+  }
+};
 
-  const handleEdit = (user) => {
-    setEditUser(user);
-    setOpenDialog(true);
-  };
+const handleUpdate = async () => {
+  try {
+    const { _id, ...updateData } = editUser;
+    await axios.put(`https://userregis-yiup.onrender.com/api/users/${_id}`, updateData);
+    setOpenDialog(false);
+    setSnackbar({
+      open: true,
+      message: 'User updated successfully',
+      severity: 'success'
+    });
+    fetchUsers();
+  } catch (error) {
+    setSnackbar({
+      open: true,
+      message: error.response?.data?.message || 'Failed to update user',
+      severity: 'error'
+    });
+  }
+};
 
-  const handleUpdate = async () => {
-    try {
-      const { _id, ...updateData } = editUser;
-      await axios.put(`http://localhost:5000/api/users/${_id}`, updateData);
-      setOpenDialog(false);
-      setSnackbar({
-        open: true,
-        message: 'User updated successfully',
-        severity: 'success'
-      });
-      fetchUsers();
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: error.response?.data?.message || 'Failed to update user',
-        severity: 'error'
-      });
-    }
-  };
+const handleDelete = async (id) => {
+  try {
+    await axios.delete(`https://userregis-yiup.onrender.com/api/users/${id}`);
+    setSnackbar({
+      open: true,
+      message: 'User deleted successfully',
+      severity: 'success'
+    });
+    fetchUsers();
+  } catch (error) {
+    setSnackbar({
+      open: true,
+      message: 'Failed to delete user',
+      severity: 'error'
+    });
+  }
+};
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`);
-      setSnackbar({
-        open: true,
-        message: 'User deleted successfully',
-        severity: 'success'
-      });
-      fetchUsers();
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: 'Failed to delete user',
-        severity: 'error'
-      });
-    }
-  };
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
