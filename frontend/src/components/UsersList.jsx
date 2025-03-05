@@ -59,7 +59,7 @@ const UsersList = () => {
   const handleUpdate = async () => {
     try {
       const { _id, ...updateData } = editUser;
-      await axios.put(http://localhost:5000/api/users/${_id}, updateData);
+      await axios.put(`http://localhost:5000/api/users/${_id}`, updateData);
       setOpenDialog(false);
       setSnackbar({
         open: true,
@@ -78,7 +78,7 @@ const UsersList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(http://localhost:5000/api/users/${id});
+      await axios.delete(`http://localhost:5000/api/users/${id}`);
       setSnackbar({
         open: true,
         message: 'User deleted successfully',
