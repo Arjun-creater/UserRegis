@@ -20,16 +20,6 @@ const updateUserSchema = Joi.object({
   about: Joi.string().max(5000).allow('')
 }).options({ stripUnknown: true });
 
-// Get all users
-export const getUsers = async (req, res) => {
-  try {
-    const users = await User.find().select('-password');
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 // Create new user
 export const createUser = async (req, res) => {
   try {
