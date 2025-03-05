@@ -81,7 +81,7 @@ export const getUsers = async (req, res) => {
 
   try {
     const users = await User.find().select('-password');
-    console.log("👥 Users found:", users.length); // Log user count
+    console.log("👥 Users found:", users); 
 
     if (!users.length) {
       return res.status(404).json({ message: "No users found in the database!" });
