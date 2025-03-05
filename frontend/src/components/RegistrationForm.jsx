@@ -87,7 +87,7 @@ const RegistrationForm = () => {
         dateOfBirth: new Date(formData.dateOfBirth).toISOString()
       };
 
-      const response = await axios.post('http://localhost:5000/api/users', formattedData);
+      const response = await axios.post('https://userregis-yiup.onrender.com/api/users', formattedData);
       
       if (response.status === 201) {
         setSnackbar({
