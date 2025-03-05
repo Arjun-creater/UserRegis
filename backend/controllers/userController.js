@@ -85,3 +85,22 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getUsers = async (req, res) => {
+  console.log("🔍 getUsers function called!"); // Debugging line
+
+  try {
+    const users = await User.find().select('-password');
+    console.log("👥 Users found:", users.length); // Log user count
+
+    if (!users.length) {
+      return res.status(404).json({ message: "No users found in the database!" });
+    }
+
+    res.json(users);
+  } catch (error) {
+    console.error("❌ Error fetching users:", error.message);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
